@@ -1,0 +1,12 @@
+spring:
+    data:
+        mongodb:
+            uri: mongodb://developer:Develop3r@localhost:27017/ginormitron
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: "transactions-group"
+
+kafka-topics:
+    names:
+        customers: customers

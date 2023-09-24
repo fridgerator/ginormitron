@@ -42,7 +42,7 @@ public class CustomerGenerator {
                 faker.address().city()
             );
 
-            logger.info("customer : {}", customer);
+            logger.debug("customer : {}", customer);
 
             try {
                 kafkaTemplate.send(cutomersTopic, customer).get();
