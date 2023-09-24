@@ -1,4 +1,4 @@
-package com.fridgerator.ginormitron.userdata.generator;
+package com.fridgerator.ginormitron.customerdata.generator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,25 +8,25 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.fridgerator.ginormitron.userdata.model.User;
+import com.fridgerator.ginormitron.customerdata.model.Customer;
 import com.github.javafaker.Faker;
 
 @Service
-public class UserGenerator {
-    private static Logger logger = LogManager.getLogger(UserGenerator.class);
+public class CustomerGenerator {
+    private static Logger logger = LogManager.getLogger(CustomerGenerator.class);
 
     @Autowired
-    private KafkaTemplate<String, User> kafkaTemplate;
+    private KafkaTemplate<String, Customer> kafkaTemplate;
 
-    @Value("${kafka-topics.names.users}")
-    private String usersTopic;
+    @Value("${kafka-topics.names.customers}")
+    private String cutomersTopic;
 
-    UserGenerator (KafkaTemplate<String, User> kafkaTemplate) {
+    CustomerGenerator (KafkaTemplate<String, Customer> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     @Async
-    public void generateUsers () throws InterruptedException {
+    public void generateCustomers () throws InterruptedException {
         Faker faker = new Faker();
 
         while (true) {
@@ -34,14 +34,14 @@ public class UserGenerator {
 
             String name = faker.name().fullName();
             String address = faker.address().streetAddress();
-            User user = new User(name, address);
+            Customer customer = new Customer(name, address);
 
-            logger.info("user : {}, {}", name, address);
+            logger.info("customer : {}, {}", name, address);
 
             try {
-                kafkaTemplate.send(usersTopic, user).get();
+                kafkaTemplate.send(cutomersTopic, customer).get();
             } catch (Exception e) {
-                logger.error("there was an error : {}", e);
+                logger.error("Error publishing : {}", e);
             }
         }
     }

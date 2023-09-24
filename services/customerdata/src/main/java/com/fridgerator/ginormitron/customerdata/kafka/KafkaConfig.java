@@ -1,4 +1,4 @@
-package com.fridgerator.ginormitron.userdata.kafka;
+package com.fridgerator.ginormitron.customerdata.kafka;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.core.KafkaAdmin.NewTopics;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.fridgerator.ginormitron.userdata.model.User;
+import com.fridgerator.ginormitron.customerdata.model.Customer;
 
 @Configuration
 public class KafkaConfig {
@@ -23,8 +23,8 @@ public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Value("${kafka-topics.names.users}")
-    private String usersTopic;
+    @Value("${kafka-topics.names.customers}")
+    private String customersTopic;
 
     @Value("${kafka-topics.replicaCount}")
     int replicaCount;
@@ -34,9 +34,9 @@ public class KafkaConfig {
 
     @Bean
     public NewTopics topics() {
-        System.out.println("users topic : " + usersTopic);
+        System.out.println("customers topic : " + customersTopic);
         return new NewTopics(
-            TopicBuilder.name(usersTopic)
+            TopicBuilder.name(customersTopic)
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build()
@@ -44,7 +44,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ProducerFactory<String, User> producerFactory() {
+    public ProducerFactory<String, Customer> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
         configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
@@ -55,7 +55,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, User> kafkaTemplate() {
+    public KafkaTemplate<String, Customer> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

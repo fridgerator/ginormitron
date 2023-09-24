@@ -6,4 +6,4 @@ kafka-topics:
     replicaCount: 1
     partitionCount: 3
     names:
-        users: users
+        customers: customers

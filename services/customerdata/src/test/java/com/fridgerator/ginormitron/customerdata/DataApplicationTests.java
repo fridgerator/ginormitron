@@ -1,4 +1,4 @@
-package com.fridgerator.ginormitron.userdata;
+package com.fridgerator.ginormitron.customerdata;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

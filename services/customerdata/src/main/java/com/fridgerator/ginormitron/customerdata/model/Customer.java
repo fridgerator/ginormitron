@@ -1,4 +1,4 @@
-package com.fridgerator.ginormitron.userdata.model;
+package com.fridgerator.ginormitron.customerdata.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class User {
+public class Customer {
     private String name;
     private String address;
 }
