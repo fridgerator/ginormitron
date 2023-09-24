@@ -14,4 +14,9 @@ import lombok.ToString;
 public class Customer {
     private String name;
     private String address;
+    private String phoneNumber;
+    private String state;
+    private String timezone;
+    private String zipcode;
+    private String city;
 }

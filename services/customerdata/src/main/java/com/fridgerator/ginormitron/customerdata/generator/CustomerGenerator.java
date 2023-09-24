@@ -32,11 +32,17 @@ public class CustomerGenerator {
         while (true) {
             Thread.sleep(300);
 
-            String name = faker.name().fullName();
-            String address = faker.address().streetAddress();
-            Customer customer = new Customer(name, address);
+            Customer customer = new Customer(
+                faker.name().fullName(),
+                faker.address().streetAddress(),
+                faker.phoneNumber().phoneNumber(),
+                faker.address().state(),
+                faker.address().timeZone(),
+                faker.address().zipCode(),
+                faker.address().city()
+            );
 
-            logger.info("customer : {}, {}", name, address);
+            logger.info("customer : {}", customer);
 
             try {
                 kafkaTemplate.send(cutomersTopic, customer).get();
