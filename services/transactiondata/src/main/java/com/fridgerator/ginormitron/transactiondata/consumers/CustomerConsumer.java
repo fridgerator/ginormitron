@@ -20,6 +20,6 @@ public class CustomerConsumer {
     @KafkaListener(topics = "${kafka-topics.names.customers}", containerFactory = "customerKafkaListenerContainerFactory")
     public void handleCustomers(Customer customer) {
         customerRepo.save(customer);
-        logger.debug("customer saved");
+        logger.debug("customer saved : {}", customer);
     }
 }

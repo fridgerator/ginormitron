@@ -10,3 +10,4 @@ spring:
 kafka-topics:
     names:
         customers: customers
+        retailers: retailers

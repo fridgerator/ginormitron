@@ -42,7 +42,7 @@ public class RetailerGenerator {
                 faker.address().city()
             );
 
-            logger.info("retailer : {}", retailer);
+            logger.debug("retailer : {}", retailer);
 
             try {
                 kafkaTemplate.send(retailersTopic, retailer).get();
