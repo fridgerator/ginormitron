@@ -8,6 +8,9 @@ spring:
             group-id: "transactions-group"
 
 kafka-topics:
+    replicaCount: 1
+    partitionCount: 3
     names:
         customers: customers
         retailers: retailers
+        transactions: transactions

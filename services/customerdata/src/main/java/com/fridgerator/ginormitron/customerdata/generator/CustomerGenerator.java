@@ -19,11 +19,7 @@ public class CustomerGenerator {
     private KafkaTemplate<String, Customer> kafkaTemplate;
 
     @Value("${kafka-topics.names.customers}")
-    private String cutomersTopic;
-
-    CustomerGenerator (KafkaTemplate<String, Customer> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    private String customersTopic;
 
     @Async
     public void generateCustomers () throws InterruptedException {
@@ -45,7 +41,7 @@ public class CustomerGenerator {
             logger.debug("customer : {}", customer);
 
             try {
-                kafkaTemplate.send(cutomersTopic, customer).get();
+                kafkaTemplate.send(customersTopic, customer).get();
             } catch (Exception e) {
                 logger.error("Error publishing : {}", e);
             }
