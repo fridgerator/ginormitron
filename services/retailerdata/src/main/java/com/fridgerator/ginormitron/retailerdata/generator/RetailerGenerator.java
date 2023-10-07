@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.fridgerator.ginormitron.retailerdata.model.Retailer;
 import com.github.javafaker.Faker;
 
-@Service
+// @Service
 public class RetailerGenerator {
     private static Logger logger = LogManager.getLogger(RetailerGenerator.class);
 
@@ -45,7 +45,7 @@ public class RetailerGenerator {
             logger.debug("retailer : {}", retailer);
 
             try {
-                kafkaTemplate.send(retailersTopic, retailer).get();
+                // kafkaTemplate.send(retailersTopic, retailer).get();
             } catch (Exception e) {
                 logger.error("Error publishing : {}", e);
             }
