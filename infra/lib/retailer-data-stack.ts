@@ -56,7 +56,10 @@ export class RetailerDataStack extends Stack {
             logging: new AwsLogDriver({ streamPrefix: 'retailer-data' }),
             environment: {
                 SPRING_PROFILES_ACTIVE: "aws"
-            }
+            },
+            // healthCheck: {
+            //     command: [ "CMD-SHELL", "curl -f http://localhost/actuator/health || exit 1" ]
+            // }
         })
 
         appContainer.addPortMappings({
@@ -73,12 +76,19 @@ export class RetailerDataStack extends Stack {
         // const service = new ApplicationLoadBalancedFargateService(this, "retailer-data-service", {
         //     cluster,
         //     memoryLimitMiB: 2048,
-        //     cpu: 512,
+        //     cpu: 256,
         //     taskImageOptions: {
         //         image: ContainerImage.fromRegistry("270744187218.dkr.ecr.us-east-1.amazonaws.com/retailerdata:latest"),
         //         containerPort: 8080,
-        //         executionRole
+        //         executionRole,
+        //         environment: {
+        //             SPRING_PROFILES_ACTIVE: "aws"
+        //         }
         //     }
+        // })
+
+        // service.targetGroup.configureHealthCheck({
+        //     path: '/actuator/health'
         // })
     }
 }
