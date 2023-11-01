@@ -2,4 +2,4 @@ server:
     port: 8080
 
 customer-data:
-    url: http://localhost:8080/api/v1
+    url: http://customer-service-09428636bc23cc426.7d67968.vpc-lattice-svcs.us-east-1.on.aws

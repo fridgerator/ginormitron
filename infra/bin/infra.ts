@@ -4,6 +4,7 @@ import * as cdk from 'aws-cdk-lib';
 import { MskStack } from '../lib/msk-stack';
 import { CustomerDataStack } from '../lib/customer-data-stack';
 import { RetailerDataStack } from '../lib/retailer-data-stack';
+import { ServiceNetworkStack } from '../lib/service-network-stack'
 
 const app = new cdk.App();
 const props = {
@@ -13,6 +14,8 @@ const props = {
   },
 };
 
+const serviceNetworkStack = new ServiceNetworkStack(app, "ServiceNetworkStack", props);
 // new MskStack(app, "MskStack", props);
-new CustomerDataStack(app, "CustomerDataStack", props);
-new RetailerDataStack(app, "RetailerDataStack", props);
+// new CustomerDataStack(app, "CustomerDataStack", props);
+const retailerDataStack = new RetailerDataStack(app, "RetailerDataStack", props);
+retailerDataStack.addDependency(serviceNetworkStack)

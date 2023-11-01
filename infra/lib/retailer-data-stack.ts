@@ -1,9 +1,9 @@
-import { CfnOutput, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
-import { InstanceType, Vpc } from "aws-cdk-lib/aws-ec2";
-import { AwsLogDriver, Cluster, ContainerImage, FargateService, FargateTaskDefinition, Protocol } from "aws-cdk-lib/aws-ecs";
-import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
-import { Effect, PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { Stack, StackProps} from "aws-cdk-lib";
+import { Vpc } from "aws-cdk-lib/aws-ec2";
+import { Cluster } from "aws-cdk-lib/aws-ecs";
 import { Construct } from "constructs";
+import { LatticeService } from "./shared/lattice-service";
+import { EcsService } from "./shared/ecs-service";
 
 export class RetailerDataStack extends Stack {
     props: StackProps
@@ -24,51 +24,17 @@ export class RetailerDataStack extends Stack {
             vpc
         })
 
-        const executionRole = new Role(this, "execution-role", {
-            roleName: "retailer-data-execution-role",
-            assumedBy: new ServicePrincipal("ecs-tasks.amazonaws.com")
-        })
-        executionRole.addToPrincipalPolicy(
-            new PolicyStatement({
-                effect: Effect.ALLOW,
-                actions: [
-                    "ecr:BatchGetImage",
-                    "ecr:GetDownloadUrlForLayer",
-                    "ecr:GetAuthorizationToken",
-                    "secretsmanager:*"
-                ],
-                resources: ["*"]
-            })
-        )
-
-        cluster.addCapacity("DefaultAutoScalingGroupCapacity", {
-            instanceType: new InstanceType("t2.large")
-        })
-
-        const taskDefinition = new FargateTaskDefinition(this, "retailer-data-taskdef", {
-            memoryLimitMiB: 2048,
-            executionRole
-        });
-
-        const appContainer = taskDefinition.addContainer("retailer-data", {
-            image: ContainerImage.fromRegistry("270744187218.dkr.ecr.us-east-1.amazonaws.com/retailerdata:latest"),
-            memoryLimitMiB: 2048,
-            logging: new AwsLogDriver({ streamPrefix: 'retailer-data' }),
-            environment: {
-                SPRING_PROFILES_ACTIVE: "aws"
-            },
-            // healthCheck: {
-            //     command: [ "CMD-SHELL", "curl -f http://localhost/actuator/health || exit 1" ]
-            // }
-        })
-
-        appContainer.addPortMappings({
-            containerPort: 8080
-        })
-
-        const service = new FargateService(this, "retailer-data-service", {
+        const retailerEcsService = new EcsService(this, 'retailer-ecs-service', {
             cluster,
-            taskDefinition
+            registry: '270744187218.dkr.ecr.us-east-1.amazonaws.com/retailerdata:latest',
+            serviceName: 'retailer-data',
+            publicAlb: true,
+        })
+
+        new LatticeService(this, 'retailer-lattice-service', {
+            vpc,
+            loadBalancer: retailerEcsService.latticeLoadBalancer,
+            serviceName: 'retailer-data'
         })
 
         // https://github.com/aws/aws-cdk/blob/main/packages/aws-cdk-lib/aws-ecs-patterns/lib/fargate/application-load-balanced-fargate-service.ts
