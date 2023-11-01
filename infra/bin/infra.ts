@@ -16,6 +16,12 @@ const props = {
 
 const serviceNetworkStack = new ServiceNetworkStack(app, "ServiceNetworkStack", props);
 // new MskStack(app, "MskStack", props);
-// new CustomerDataStack(app, "CustomerDataStack", props);
-const retailerDataStack = new RetailerDataStack(app, "RetailerDataStack", props);
+const customerDataStack = new CustomerDataStack(app, "CustomerDataStack", props);
+customerDataStack.addDependency(serviceNetworkStack)
+
+const retailerDataStack = new RetailerDataStack(app, "RetailerDataStack", {
+  ...props,
+  customerDataUrl: customerDataStack.domainName
+});
 retailerDataStack.addDependency(serviceNetworkStack)
+retailerDataStack.addDependency(customerDataStack)

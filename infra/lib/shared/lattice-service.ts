@@ -3,7 +3,7 @@ import { Cluster } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancer } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
-import { CfnAccessLogSubscription, CfnAuthPolicy, CfnListener, CfnService, CfnServiceNetworkServiceAssociation, CfnTargetGroup } from "aws-cdk-lib/aws-vpclattice";
+import { CfnAccessLogSubscription, CfnAuthPolicy, CfnListener, CfnService, CfnServiceNetworkServiceAssociation, CfnServiceNetworkVpcAssociation, CfnTargetGroup } from "aws-cdk-lib/aws-vpclattice";
 import { Construct } from "constructs";
 
 export interface LatticeServiceProps {
@@ -13,6 +13,8 @@ export interface LatticeServiceProps {
 }
 
 export class LatticeService extends Construct {
+    domainName: string
+
     constructor(scope: Construct, id: string, props: LatticeServiceProps) {
         super(scope, id);
 
@@ -72,9 +74,16 @@ export class LatticeService extends Construct {
 
         const serviceNetworkIdentifier = StringParameter.fromStringParameterName(this, 'service-network-arn', 'service-network-arn').stringValue
 
-        new CfnServiceNetworkServiceAssociation(this, 'association', {
+        const serviceAssociation = new CfnServiceNetworkServiceAssociation(this, 'association', {
             serviceIdentifier: vpclService.attrArn,
             serviceNetworkIdentifier
         })
+
+        new CfnServiceNetworkVpcAssociation(this, 'vpc-association', {
+            serviceNetworkIdentifier: vpclService.attrArn,
+            vpcIdentifier: props.vpc.vpcId
+        })
+
+        this.domainName = serviceAssociation.attrDnsEntryDomainName
     }
 }

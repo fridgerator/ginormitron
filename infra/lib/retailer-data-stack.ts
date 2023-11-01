@@ -5,10 +5,14 @@ import { Construct } from "constructs";
 import { LatticeService } from "./shared/lattice-service";
 import { EcsService } from "./shared/ecs-service";
 
-export class RetailerDataStack extends Stack {
-    props: StackProps
+export interface RetailerDataStackProps extends StackProps {
+    customerDataUrl: string
+}
 
-    constructor(scope: Construct, id: string, props: StackProps) {
+export class RetailerDataStack extends Stack {
+    props: RetailerDataStackProps
+
+    constructor(scope: Construct, id: string, props: RetailerDataStackProps) {
         super(scope, id, props);
         this.props = props;
         this.build();
@@ -29,6 +33,9 @@ export class RetailerDataStack extends Stack {
             registry: '270744187218.dkr.ecr.us-east-1.amazonaws.com/retailerdata:latest',
             serviceName: 'retailer-data',
             publicAlb: true,
+            env: {
+                CUSTOMER_DATA_URL: this.props.customerDataUrl
+            }
         })
 
         new LatticeService(this, 'retailer-lattice-service', {

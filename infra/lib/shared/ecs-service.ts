@@ -7,7 +7,10 @@ export interface EcsServiceProps {
     cluster: Cluster
     registry: string
     serviceName: string
-    publicAlb?: boolean
+    publicAlb?: boolean,
+    env?: {
+        [key: string]: string
+    }
 }
 
 export class EcsService extends Construct {
@@ -38,13 +41,22 @@ export class EcsService extends Construct {
             executionRole
         });
 
+        let environment = {
+            SPRING_PROFILES_ACTIVE: "aws"
+        }
+
+        if (props.env) {
+            environment = {
+                ...environment,
+                ...props.env
+            }
+        }
+
         const appContainer = taskDefinition.addContainer(props.serviceName, {
             image: ContainerImage.fromRegistry(props.registry),
             memoryLimitMiB: 2048,
             logging: new AwsLogDriver({ streamPrefix: props.serviceName }),
-            environment: {
-                SPRING_PROFILES_ACTIVE: "aws"
-            }
+            environment
         })
 
         appContainer.addPortMappings({
