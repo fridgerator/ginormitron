@@ -1,3 +1,7 @@
+## Services
+
+![services](ginormitron_services.png)
+
 ## Multi-VPC infrastructure
 
 1. ECS Fargate services running spring boot apps
