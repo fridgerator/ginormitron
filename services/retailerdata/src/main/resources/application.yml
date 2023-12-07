@@ -3,10 +3,10 @@ spring:
         bootstrap-servers: localhost:9092
 
 server:
-    port: 8081
+    port: 8083
 
 customer-data:
-    url: http://localhost:8080/api/v1
+    url: localhost:8080
 
 kafka-topics:
     replicaCount: 1

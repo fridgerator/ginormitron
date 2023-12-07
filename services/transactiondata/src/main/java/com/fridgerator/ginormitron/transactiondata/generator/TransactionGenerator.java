@@ -62,9 +62,8 @@ public class TransactionGenerator {
             Retailer retailer = retailerRepo.getRandom().get(0);
             List<Customer> customers = customerRepo.getRandomSet();
 
-            logger.info("retailer : {}", retailer);
+            logger.debug("retailer : {}", retailer);
 
-            // TODO: transaction / batch create
             for (Customer customer : customers) {
                 Transaction transaction = new Transaction(
                     customer.get_id(),
@@ -75,8 +74,9 @@ public class TransactionGenerator {
                 );
 
                 try {
-                    kafkaTemplate.send(transactionsTopic, transaction).get();
-                    logger.info("published transaction: {}", transaction);
+                    kafkaTemplate.send(transactionsTopic, transaction);
+                    kafkaTemplate.flush();
+                    logger.debug("published transaction: {}", transaction);
                 } catch (Exception e) {
                     logger.error("Error publishing : {}", e);
                 }

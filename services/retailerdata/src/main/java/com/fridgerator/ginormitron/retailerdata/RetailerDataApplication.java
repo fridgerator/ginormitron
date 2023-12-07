@@ -14,12 +14,12 @@ import com.fridgerator.ginormitron.retailerdata.generator.RetailerGenerator;
 @EnableFeignClients
 public class RetailerDataApplication implements CommandLineRunner {
 
-	// @Autowired
-	// private final RetailerGenerator generator;
+	@Autowired
+	private final RetailerGenerator generator;
 
-	// RetailerDataApplication(RetailerGenerator generator) {
-	// 	this.generator = generator;
-	// }
+	RetailerDataApplication(RetailerGenerator generator) {
+		this.generator = generator;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(RetailerDataApplication.class, args);
@@ -27,6 +27,6 @@ public class RetailerDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws InterruptedException {
-		// generator.generateRetailers();
+		generator.generateRetailers();
 	}
 }

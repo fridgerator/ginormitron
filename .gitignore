@@ -32,3 +32,5 @@ gradle-app.setting
 
 
 .vscode
+signoz
+opentelemetry-javaagent.jar
