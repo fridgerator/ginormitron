@@ -7,3 +7,5 @@ In no particular order
 - [ ] producers / consumers in other languages (Node.js, c++)
 - [ ] spring boot admin
 - [ ] OpenTelemetry / Signoz distributed tracicng and APM
+- [ ] WAF
+- [ ] IAM auth between services
