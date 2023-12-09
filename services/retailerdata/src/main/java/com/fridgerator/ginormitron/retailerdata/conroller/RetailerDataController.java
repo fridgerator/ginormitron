@@ -1,6 +1,5 @@
 package com.fridgerator.ginormitron.retailerdata.conroller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;

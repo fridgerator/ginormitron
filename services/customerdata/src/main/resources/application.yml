@@ -1,13 +1,15 @@
 spring:
+    application:
+        name: customerdata
     boot:
         admin:
             client:
-                # auto-registration: true
-                # enabled: true
                 url: http://localhost:8091
-
     kafka:
         bootstrap-servers: localhost:9092
+
+server:
+    port: 8080
 
 kafka-topics:
     replicaCount: 1
@@ -20,5 +22,3 @@ management:
         web.exposure.include: '*'
     info:
         env.enabled: true
-
-logging.level.de.codecentric: TRACE

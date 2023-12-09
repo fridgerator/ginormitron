@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.fridgerator.ginormitron.transactiondata.entities.Customer;
@@ -44,20 +45,21 @@ public class TransactionGenerator {
 
         logger.info("customers: {}, retailers: {}", customersCount, retailersCount);
 
-        if (customersCount > 500 && retailersCount > 50) {
+        if (customersCount > 500 / 10 && retailersCount > 50 / 10) {
             TransactionGenerator.sufficientData = true;
         }
 
         return false;
     }
 
+    @Async("threadPoolTaskExecutor")
     public void generateTransactions () throws InterruptedException {
         Faker faker = new Faker();
 
         while (true) {
             if (!checkSufficientData()) continue;
 
-            Thread.sleep(300);
+            Thread.sleep(300 / 10);
 
             Retailer retailer = retailerRepo.getRandom().get(0);
             List<Customer> customers = customerRepo.getRandomSet();

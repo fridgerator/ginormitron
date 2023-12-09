@@ -1,9 +1,15 @@
 spring:
+    application:
+        name: retailerdata
+    boot:
+        admin:
+            client:
+                url: http://localhost:8091
     kafka:
         bootstrap-servers: localhost:9092
 
 server:
-    port: 8083
+    port: 8081
 
 customer-data:
     url: localhost:8080
@@ -13,3 +19,9 @@ kafka-topics:
     partitionCount: 3
     names:
         retailers: retailers
+
+management:
+    endpoints:
+        web.exposure.include: '*'
+    info:
+        env.enabled: true

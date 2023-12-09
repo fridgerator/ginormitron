@@ -21,12 +21,12 @@ public class CustomerGenerator {
     @Value("${kafka-topics.names.customers}")
     private String customersTopic;
 
-    @Async
+    @Async("threadPoolTaskExecutor")
     public void generateCustomers () throws InterruptedException {
         Faker faker = new Faker();
 
         while (true) {
-            Thread.sleep(300);
+            Thread.sleep(300 / 10);
 
             Customer customer = new Customer(
                 faker.name().fullName(),
@@ -41,8 +41,8 @@ public class CustomerGenerator {
             logger.debug("customer : {}", customer);
 
             try {
-                // kafkaTemplate.send(customersTopic, customer);
-                // kafkaTemplate.flush();
+                kafkaTemplate.send(customersTopic, customer);
+                kafkaTemplate.flush();
                 GeneratorCounter.incrementGeneratedCount();
             } catch (Exception e) {
                 logger.error("Error publishing : {}", e);

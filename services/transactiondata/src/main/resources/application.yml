@@ -1,4 +1,10 @@
 spring:
+    application:
+        name: transactiondata
+    boot:
+        admin:
+            client:
+                url: http://localhost:8091
     data:
         mongodb:
             uri: mongodb://developer:Develop3r@localhost:27017/ginormitron
@@ -7,6 +13,9 @@ spring:
         consumer:
             group-id: "transactions-group"
 
+server:
+    port: 8082
+
 kafka-topics:
     replicaCount: 1
     partitionCount: 3
@@ -14,3 +23,9 @@ kafka-topics:
         customers: customers
         retailers: retailers
         transactions: transactions
+
+management:
+    endpoints:
+        web.exposure.include: '*'
+    info:
+        env.enabled: true

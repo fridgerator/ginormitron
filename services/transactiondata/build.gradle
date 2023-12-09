@@ -16,11 +16,19 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.kafka:spring-kafka'
+
+	// https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-client
+	implementation 'de.codecentric:spring-boot-admin-starter-client:3.1.6'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	implementation 'org.springframework.boot:spring-boot-starter-json:3.1.4'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'com.github.javafaker:javafaker:1.0.2'
 
 	compileOnly 'org.projectlombok:lombok'

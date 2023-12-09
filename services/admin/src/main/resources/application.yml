@@ -10,5 +10,3 @@
 
 server:
     port: 8091
-
-logging.level.de.codecentric: TRACE

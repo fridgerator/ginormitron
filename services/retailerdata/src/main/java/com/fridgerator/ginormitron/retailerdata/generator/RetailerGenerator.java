@@ -30,7 +30,7 @@ public class RetailerGenerator {
         Faker faker = new Faker();
 
         while (true) {
-            Thread.sleep(3000);
+            Thread.sleep(3000 / 10);
 
             Retailer retailer = new Retailer(
                 faker.company().name(),

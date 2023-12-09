@@ -17,7 +17,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.fridgerator.ginormitron.customerdata.model.Customer;
 
-// @Configuration
+@Configuration
 public class KafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
@@ -54,7 +54,7 @@ public class KafkaConfig {
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
-    @Bean
+    @Bean(name = "kafkaTemplate")
     public KafkaTemplate<String, Customer> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
