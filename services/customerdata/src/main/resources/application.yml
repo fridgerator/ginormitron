@@ -1,4 +1,11 @@
 spring:
+    boot:
+        admin:
+            client:
+                # auto-registration: true
+                # enabled: true
+                url: http://localhost:8091
+
     kafka:
         bootstrap-servers: localhost:9092
 
@@ -7,3 +14,11 @@ kafka-topics:
     partitionCount: 3
     names:
         customers: customers
+
+management:
+    endpoints:
+        web.exposure.include: '*'
+    info:
+        env.enabled: true
+
+logging.level.de.codecentric: TRACE

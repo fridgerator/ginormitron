@@ -17,7 +17,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.fridgerator.ginormitron.customerdata.model.Customer;
 
-@Configuration
+// @Configuration
 public class KafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")

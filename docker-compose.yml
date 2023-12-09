@@ -46,3 +46,12 @@ services:
       MONGO_INITDB_DATABASE: ginormitron
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  # keycloak:
+  #   image: quay.io/keycloak/keycloak:23.0.1
+  #   ports:
+  #     - "8090:8080"
+  #   environment:
+  #     KEYCLOAK_ADMIN: admin
+  #     KEYCLOAK_ADMIN_PASSWORD: admin
+  #   command: start-dev

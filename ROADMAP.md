@@ -1,6 +1,7 @@
 In no particular order
 
-- [ ] Fraud service, using mongodb aggregation to generate / fake some fraudulent charge data
+- [ ] Fraud service
+- [ ] Mongo aggregation pipelines to do something
 - [ ] Glue schema registry
 - [ ] SSL / HTTPS everywhere
 - [x] mult-account vpc lattice

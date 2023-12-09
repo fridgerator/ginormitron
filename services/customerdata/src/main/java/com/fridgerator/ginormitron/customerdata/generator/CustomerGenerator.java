@@ -41,8 +41,8 @@ public class CustomerGenerator {
             logger.debug("customer : {}", customer);
 
             try {
-                kafkaTemplate.send(customersTopic, customer);
-                kafkaTemplate.flush();
+                // kafkaTemplate.send(customersTopic, customer);
+                // kafkaTemplate.flush();
                 GeneratorCounter.incrementGeneratedCount();
             } catch (Exception e) {
                 logger.error("Error publishing : {}", e);

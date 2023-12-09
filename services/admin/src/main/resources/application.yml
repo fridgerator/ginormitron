@@ -1,0 +1,14 @@
+# spring:
+#     kafka:
+#         bootstrap-servers: localhost:9092
+
+# kafka-topics:
+#     replicaCount: 1
+#     partitionCount: 3
+#     names:
+#         customers: customers
+
+server:
+    port: 8091
+
+logging.level.de.codecentric: TRACE
