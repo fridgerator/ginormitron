@@ -10,3 +10,11 @@
 
 server:
     port: 8091
+
+# https://howtodoinjava.com/spring-boot/oauth2-login-with-keycloak-and-spring-security/
+spring.security.oauth2.client.registration.keycloak.client-id: playground
+spring.security.oauth2.client.registration.keycloak.client-secret: qJkRHdX1nW8S4ldREBURblm46rePIQxr
+spring.security.oauth2.client.registration.keycloak.scope: openid
+spring.security.oauth2.client.registration.keycloak.authorization-grant-type: authorization_code
+spring.security.oauth2.client.registration.keycloak.redirect-uri: http://localhost:8091/login/oauth2/code/playground
+spring.security.oauth2.client.provider.keycloak.issuer-uri: http://localhost:8090/realms/playground

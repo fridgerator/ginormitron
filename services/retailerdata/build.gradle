@@ -56,3 +56,9 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootRun {
+	jvmArgs([
+		"-javaagent:./opentelemetry-javaagent.jar"
+	])
+}
