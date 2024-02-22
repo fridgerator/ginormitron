@@ -35,6 +35,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-json:3.1.6'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+	implementation files('/home/nick/Code/ginormitron/libraries/consumer/build/libs/consumer-0.0.1-SNAPSHOT.jar')
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 

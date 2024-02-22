@@ -26,7 +26,7 @@ public class CustomerGenerator {
         Faker faker = new Faker();
 
         while (true) {
-            Thread.sleep(300 / 10);
+            Thread.sleep(10 * 1000);
 
             Customer customer = new Customer(
                 faker.name().fullName(),
@@ -38,11 +38,10 @@ public class CustomerGenerator {
                 faker.address().city()
             );
 
-            logger.debug("customer : {}", customer);
-
             try {
                 kafkaTemplate.send(customersTopic, customer);
                 kafkaTemplate.flush();
+                logger.info("produced customer : {}", customer);
                 GeneratorCounter.incrementGeneratedCount();
             } catch (Exception e) {
                 logger.error("Error publishing : {}", e);
